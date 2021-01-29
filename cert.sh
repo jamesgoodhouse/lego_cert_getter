@@ -16,16 +16,16 @@ _lego () {
        --dns="$dns_provider" \
        --dns.resolvers="$dns_resolver" \
        --domains="$1" \
-           --email="$email" \
-           --key-type="$key_type" \
-           --path="$lego_path" \
-           --server="$server" \
-           "$2"
+       --email="$email" \
+       --key-type="$key_type" \
+       --path="$lego_path" \
+       --server="$server" \
+       "$2"
 }
 
 load_creds () {
   while IFS= read -r line; do
-    export "$line"
+    export "${line?}"
   done < "$creds_file"
 }
 
@@ -41,8 +41,8 @@ create () {
 
 load_creds
 
-while read domain; do
-  if [ $(lego --path=/etc/lego list -n | grep "$domain" | wc -l) -eq 1 ]; then
+while read -r domain; do
+  if [ "$(lego --path="$lego_path" list -n | grep -c "$domain")" -eq 1 ]; then
     renew "$domain"
   else
     create "$domain"
