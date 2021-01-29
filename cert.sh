@@ -4,19 +4,16 @@ set -euf -o pipefail
 
 lego_path=/etc/lego
 creds_file="$lego_path/creds"
-dns_provider=namecheap
-dns_resolver=dns1.registrar-servers.com
 domains_file="$lego_path/domains"
-email=admin@goodhouse.io
-key_type=rsa4096
+key_type=${LEGO_KEY_TYPE-rsa4096}
 server="${LEGO_SERVER-https://acme-v02.api.letsencrypt.org/directory}"
 
 _lego () {
   lego --accept-tos \
-       --dns="$dns_provider" \
-       --dns.resolvers="$dns_resolver" \
+       --dns="$DNS_PROVIDER" \
+       --dns.resolvers="$DNS_RESOLVER" \
        --domains="$1" \
-       --email="$email" \
+       --email="$EMAIL" \
        --key-type="$key_type" \
        --path="$lego_path" \
        --server="$server" \
