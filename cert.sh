@@ -2,13 +2,13 @@
 
 set -euf -o pipefail
 
+lego_path=/etc/lego
 creds_file="$lego_path/creds"
 dns_provider=namecheap
 dns_resolver=dns1.registrar-servers.com
 domains_file="$lego_path/domains"
 email=admin@goodhouse.io
 key_type=rsa4096
-lego_path=/etc/lego
 server="${LEGO_SERVER-https://acme-v02.api.letsencrypt.org/directory}"
 
 _lego () {
