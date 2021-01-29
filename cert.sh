@@ -2,7 +2,7 @@
 
 set -euf -o pipefail
 
-lego_path=/etc/lego
+lego_path=${LEGO_PATH-/etc/lego}
 creds_file="$lego_path/creds"
 domains_file="$lego_path/domains"
 key_type=${LEGO_KEY_TYPE-rsa4096}
