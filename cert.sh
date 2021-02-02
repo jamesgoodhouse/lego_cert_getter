@@ -39,8 +39,13 @@ create () {
 load_creds
 
 while read -r domain; do
-  if [ "$(lego --path="$lego_path" list -n | grep -c "$domain")" -eq 1 ]; then
+  list_names=$(lego --path="$lego_path" list -n | grep -c "$domain")
+
+  if [ "$list_names" -eq 1 ]; then
     renew "$domain"
+  elif [ "$list_names" -gt 1 ]; then
+    echo "too many domains found"
+    exit 1
   else
     create "$domain"
   fi
